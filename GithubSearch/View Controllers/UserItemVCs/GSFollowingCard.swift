@@ -7,22 +7,29 @@
 //
 
 import UIKit
+protocol GSFollowingCardDelegate : class {
+    func didTapGetFollowersBtn(user : User)
+}
+
 
 class GSFollowingCard: GSItemInfoVC {
     
+    var itemDelegate : GSFollowingCardDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureItems()
-        
     }
     
+
     func configureItems(){
-        
         itemViewOne.configureCardType(CardType: .following, Count: user.following)
         itemViewTwo.configureCardType(CardType: .followers, Count: user.followers)
         itemButton.setButtonProperties(color: .systemGreen, text: "Get Followers")
-        
-        
+    }
+    
+    
+    override func ActionBtnWasPressed() {
+        itemDelegate?.didTapGetFollowersBtn(user: user)
     }
 }

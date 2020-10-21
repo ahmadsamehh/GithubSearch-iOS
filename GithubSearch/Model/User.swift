@@ -19,7 +19,7 @@ struct User : Codable{
     var avatarUrl : String
     var name : String?
     var bio : String?
-    var createdAt : String
+    var createdAt : Date
      
     
 }

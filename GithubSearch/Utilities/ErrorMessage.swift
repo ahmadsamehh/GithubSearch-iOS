@@ -9,8 +9,10 @@
 import Foundation
 
 enum GSError : String, Error {
-    case invalidUserName = "Invalid username. Please double check."
-    case unableToComplete = "Unable to complete your request. Please check Internet connection."
-    case invalidResponse = "Invalid response from server. Please Try again."
-    case invalidData = "Invalid data received from the server. Please Try again."
+    case invalidUserName    = "Invalid username. Please double check."
+    case unableToComplete   = "Unable to complete your request. Please check Internet connection."
+    case invalidResponse    = "Invalid response from server. Please Try again."
+    case invalidData        = "Invalid data received from the server. Please Try again."
+    case unableToFavorite   = "There was an error favoriting this user!"
+    case alreadyInFavorites = "This user is already in your favorites"
 }

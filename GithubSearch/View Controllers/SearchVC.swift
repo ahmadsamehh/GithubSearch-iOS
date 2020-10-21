@@ -10,59 +10,51 @@ import UIKit
 
 class SearchVC: UIViewController {
 
-    let logo = UIImageView()
+    let logo        = UIImageView()
     let searchField = GSTextField()
-    let searchBtn = GSButton(backgroundColor: .systemGreen, title: "Get Followers")
-    var isSearchEmpty : Bool {
-        
-        return !searchField.text!.isEmpty
-    }
+    let searchBtn   = GSButton(backgroundColor: .systemGreen, title: "Get Followers")
+    var isSearchEmpty : Bool { return !searchField.text!.isEmpty }
     
+   override func viewWillAppear(_ animated: Bool) {
+       super.viewWillAppear(true)
+    
+       navigationController?.setNavigationBarHidden(true, animated: true)
+       searchField.text = ""
+   }
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .systemBackground
+        view.addSubviews(logo,searchField,searchBtn)
         setLogoProperties()
         setEditTextProperties()
         setSearchBtnProperties()
         enableKeyboardDismiss()
     }
     
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        
-
-        navigationController?.setNavigationBarHidden(true, animated: true)
-        
-    }
     
     func enableKeyboardDismiss(){
-        
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
-        
-        
     }
     
+    
     @objc func pushNavToFollowersListVC(){
-        
         guard isSearchEmpty else {
-            print("Empty Field")
-            
-            displayGF(title: "Empty Username", message: "Please double check the username AhmadSameh", buttonText: "A7eeh")
+            showGFAlert(title: "Empty Username", message: "Please double check that you entered a username\n We need to know who you're looking for 👻", buttonText: "ok")
             return
         }
         
-        let followersVC = FollowersListVC()
-        followersVC.username = searchField.text!
-        followersVC.title = searchField.text!
+        searchField.resignFirstResponder()
+        let followersVC = FollowersListVC(username: searchField.text!)
         navigationController?.pushViewController(followersVC, animated: true)
     }
     
+    
     func setLogoProperties(){
-        view.addSubview(logo)
-        logo.image = UIImage(named: "gh-logo")
+        logo.image =  Images.logo
         logo.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -74,9 +66,8 @@ class SearchVC: UIViewController {
 
     }
     
+    
     func setEditTextProperties(){
-        
-        view.addSubview(searchField)
         searchField.delegate = self
         
         NSLayoutConstraint.activate([
@@ -84,30 +75,22 @@ class SearchVC: UIViewController {
             searchField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
             searchField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
             searchField.heightAnchor.constraint(equalToConstant: 50)
-
         ])
-        
-        
     }
     
     
     func setSearchBtnProperties(){
-        view.addSubview(searchBtn)
         searchBtn.addTarget(self, action: #selector (pushNavToFollowersListVC), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
-           
             searchBtn.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
             searchBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
             searchBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
             searchBtn.heightAnchor.constraint(equalToConstant: 50)
         ])
-        
-        
-        
     }
-
 }
+
 
 extension SearchVC : UITextFieldDelegate{
     
@@ -116,6 +99,4 @@ extension SearchVC : UITextFieldDelegate{
         pushNavToFollowersListVC()
         return true
     }
-    
-    
 }

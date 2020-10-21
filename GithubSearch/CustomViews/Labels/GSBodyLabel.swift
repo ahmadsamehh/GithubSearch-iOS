@@ -9,19 +9,18 @@
 import UIKit
 
 class GSBodyLabel: UILabel {
-
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         configure()
     }
     
-    init(textAllignment : NSTextAlignment) {
-        super.init(frame: .zero)
+    
+    convenience init(textAllignment : NSTextAlignment) {
+        self.init(frame: .zero)
         self.textAlignment = textAllignment
         configure()
-        
     }
     
     
@@ -32,13 +31,12 @@ class GSBodyLabel: UILabel {
     
     
     private func configure(){
-        textColor = .secondaryLabel
-        adjustsFontSizeToFitWidth = true
-        translatesAutoresizingMaskIntoConstraints = false
-        lineBreakMode = .byWordWrapping
-        minimumScaleFactor = 0.75
-        
-        
+        textColor                                   = .secondaryLabel
+        adjustsFontSizeToFitWidth                   = true
+        translatesAutoresizingMaskIntoConstraints   = false
+        adjustsFontForContentSizeCategory           = true
+        font = UIFont.preferredFont(forTextStyle: .body)
+        lineBreakMode                               = .byWordWrapping
+        minimumScaleFactor                          = 0.75
     }
-
 }

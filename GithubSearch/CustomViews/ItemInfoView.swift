@@ -12,8 +12,8 @@ enum itemInfoType {
 }
 class ItemInfoView: UIView {
 
-    let itemImageView = UIImageView()
-    let itemTitleLabel = GSTitleLabel(textAllignment: .left, textSize: 14)
+    let itemImageView   = UIImageView()
+    let itemTitleLabel  = GSTitleLabel(textAllignment: .left, textSize: 14)
     let itemNumberLabel = GSTitleLabel(textAllignment: .center, textSize: 14)
     var items :[UIView] = []
     
@@ -30,8 +30,8 @@ class ItemInfoView: UIView {
 
     
     func configure(){
-        items = [itemImageView, itemTitleLabel,itemNumberLabel]
-        for item in items {addSubview(item)}
+        
+        addSubviews(itemImageView, itemTitleLabel,itemNumberLabel)
         
         itemImageView.translatesAutoresizingMaskIntoConstraints = false
         itemImageView.tintColor = .label
@@ -55,50 +55,28 @@ class ItemInfoView: UIView {
             itemNumberLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             itemNumberLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             itemNumberLabel.heightAnchor.constraint(equalToConstant: 18)
-        
-        
-        
         ])
-        
     }
     
     
     func configureCardType(CardType itemInfoType : itemInfoType , Count count : Int){
         switch itemInfoType {
         case .followers:
-            itemImageView.image = UIImage(systemName: "person.3.fill")
+            itemImageView.image =  Images.person
             itemTitleLabel.text = "followers"
             
-            
-            break
-            
         case .following:
-            
-            itemImageView.image = UIImage(systemName: "heart")
+            itemImageView.image = Images.heart
             itemTitleLabel.text = "following"
-            
-
-            break
  
         case .gists:
-            
-            itemImageView.image = UIImage(systemName: "text.alignleft")
+            itemImageView.image = Images.alignLeft
             itemTitleLabel.text = "Public Gists"
-            
-            
-            break
-            
+
         case .publicRepos:
-            
-            itemImageView.image = UIImage(systemName: "folder")
+            itemImageView.image = Images.folder
             itemTitleLabel.text = "Public Repos"
-            
-            
-            break
-        
         }
-        
         itemNumberLabel.text = String(count)
-        
     }
 }

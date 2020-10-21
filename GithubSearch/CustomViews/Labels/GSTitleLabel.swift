@@ -15,31 +15,27 @@ class GSTitleLabel: UILabel {
         configure()
     }
 
-    init(textAllignment : NSTextAlignment , textSize : CGFloat) {
-        
-        super.init(frame: .zero)
+    
+    convenience init(textAllignment : NSTextAlignment , textSize : CGFloat) {
+        self.init(frame: .zero)
         self.textAlignment = textAlignment
-        
         self.font = UIFont.systemFont(ofSize: textSize, weight: .bold)
-        
-        configure()
-        
     }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     private func configure(){
-        textColor = .label
-        adjustsFontSizeToFitWidth = true
-        translatesAutoresizingMaskIntoConstraints = false
-        minimumScaleFactor = 0.9
+        textColor                                   = .label
+        adjustsFontSizeToFitWidth                   = true
+        translatesAutoresizingMaskIntoConstraints   = false
+        adjustsFontForContentSizeCategory           = true
+        minimumScaleFactor                          = 0.9
         //if the text is bigger than the label
-        lineBreakMode = .byTruncatingTail
-        
-        
-        
+        lineBreakMode                               = .byTruncatingTail
+ 
     }
-
 }

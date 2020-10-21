@@ -10,7 +10,8 @@ import UIKit
 
 class AvatarImageView: UIImageView {
 
-  let placeholderImage = UIImage(named: "avatar-placeholder")
+    let placeholderImage = Images.avatarPlaceholder
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -22,24 +23,15 @@ class AvatarImageView: UIImageView {
     
     
     private func configure(){
-        
         layer.cornerRadius = 16
+        image              = placeholderImage
+        clipsToBounds      = true
         translatesAutoresizingMaskIntoConstraints = false
-        image = placeholderImage
-        clipsToBounds = true
-
         
     }
     
     func getImage(for urlText : String){
-        
-        if let image = NetworkManager.shared.cache.object(forKey: NSString(string: urlText) ) {
-            
-            self.image = image
-            
-        }
-        
-        
+        if let image = NetworkManager.shared.cache.object(forKey: NSString(string: urlText) ) {self.image = image}
         
         guard let url = URL(string: urlText) else {return}
         
@@ -51,13 +43,8 @@ class AvatarImageView: UIImageView {
             
             guard let image = UIImage(data: data) else {return}
             NetworkManager.shared.cache.setObject(image, forKey: NSString(string: urlText))
-            
-            DispatchQueue.main.async {
-                self.image = image
-            }
+            DispatchQueue.main.async {self.image = image}
         }
         task.resume()
-        
-        
     }
 }

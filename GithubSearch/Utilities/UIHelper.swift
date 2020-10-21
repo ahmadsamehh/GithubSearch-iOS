@@ -8,21 +8,20 @@
 
 import UIKit
 
- struct UIHelper {
+ enum UIHelper {
+    
    static func customThreeColumnLayout(for view: UIView) -> UICollectionViewFlowLayout{
-        
         let width = view.bounds.width
-        let padding : CGFloat = 12
-        let spacing : CGFloat = 10
+        let padding : CGFloat         = 12
+        let spacing : CGFloat         = 10
         let availableSpace = width - (2*padding) - (2*spacing)
-        let itemWidth = availableSpace/3
+        let itemWidth                 = availableSpace/3
         
-        let flowLayout = UICollectionViewFlowLayout()
+        let flowLayout          = UICollectionViewFlowLayout()
         flowLayout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
-        flowLayout.itemSize = CGSize(width: itemWidth, height: itemWidth + 40)
+        flowLayout.itemSize     = CGSize(width: itemWidth, height: itemWidth + 40)
+    
         return flowLayout
-        
-        
     }
 }
 

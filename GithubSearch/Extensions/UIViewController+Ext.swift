@@ -10,32 +10,28 @@ import UIKit
 
 fileprivate var contentView : UIView!
 extension UIViewController{
-    func displayGF(title: String , message: String , buttonText : String){
-        
+    
+    func showGFAlert(title: String , message: String , buttonText : String){
         DispatchQueue.main.async {
-            
             let alertVC = GSAlert(titlelabelText: title, messageLabelText: message, buttonTitle: buttonText)
             alertVC.modalPresentationStyle = .overFullScreen
             alertVC.modalTransitionStyle = .crossDissolve
             self.present(alertVC, animated: true, completion: nil)
-            
         }
-        
-        
     }
     
     
     func ShowLoadingAnimation(){
-        contentView = UIView(frame: view.bounds)
-        view.addSubview(contentView)
+        contentView                 = UIView(frame: view.bounds)
         contentView.backgroundColor = .systemBackground
-        contentView.alpha = 0
+        contentView.alpha           = 0
+        view.addSubview(contentView)
         
         UIView.animate(withDuration: 0.25) {
             contentView.alpha = 0.8
         }
         
-        let loading = UIActivityIndicatorView(style: .large)
+        let loading                 = UIActivityIndicatorView(style: .large)
         contentView.addSubview(loading)
         
         loading.translatesAutoresizingMaskIntoConstraints = false
@@ -49,21 +45,17 @@ extension UIViewController{
     
     
     func dismissLoadingAnimation(){
-        
         DispatchQueue.main.async {
             contentView.removeFromSuperview()
             contentView = nil
         }
-  
     }
+    
     
     func showEmptyStateView(for messageTxt : String , view : UIView){
-        
-        let emptyStateView = GFEmptyStateView(messageText: messageTxt)
+        let emptyStateView = GSEmptyStateView(messageText: messageTxt)
         emptyStateView.frame = view.bounds
         view.addSubview(emptyStateView)
-        
     }
-    
 }
 

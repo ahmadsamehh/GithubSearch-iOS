@@ -9,11 +9,9 @@
 import UIKit
 
 class GSUserHeaderVC: UIViewController {
-
-    //Variables
+    
     var currentUser : User!
     
-    //Views
     let avatarImageView = AvatarImageView(frame: .zero)
     let loginLabel = GSTitleLabel(textAllignment: .left, textSize: 34)
     let nameLabel = GSSecondaryLabel(fontSize: 18)
@@ -22,35 +20,9 @@ class GSUserHeaderVC: UIViewController {
     let bioLabel = GSBodyLabel(textAllignment: .left)
     
     
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        addSubviews()
-        addConstraints()
-        configureDataInUIElements()
-        
-        
-    }
-    
-    
-    func addSubviews(){
-        view.addSubview(avatarImageView)
-        view.addSubview(loginLabel)
-        view.addSubview(nameLabel)
-        view.addSubview(locationImageView)
-        view.addSubview(locationLabel)
-        view.addSubview(bioLabel)
-        
-    }
-    
-    
-     init(currentUser : User) {
+    init(currentUser : User) {
         super.init(nibName: nil, bundle: nil)
-        
         self.currentUser = currentUser
-        
     }
     
     required init?(coder: NSCoder) {
@@ -58,25 +30,44 @@ class GSUserHeaderVC: UIViewController {
     }
     
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.addSubviews(avatarImageView,loginLabel,nameLabel,locationImageView,locationLabel,bioLabel)
+        addConstraints()
+        configureDataInUIElements()
+        
+    }
+    
+    
     func configureDataInUIElements(){
-        avatarImageView.getImage(for: currentUser.avatarUrl)
-        loginLabel.text = currentUser.login
-        nameLabel.text = currentUser.name ?? ""
-        locationLabel.text = currentUser.location ?? "No Location"
-        bioLabel.text = currentUser.bio ?? "No Bio available"
-        bioLabel.numberOfLines = 3
-        locationImageView.image = UIImage(systemName: "mappin.and.ellipse")
+        downloadUserImage()
+        loginLabel.text             = currentUser.login
+        nameLabel.text              = currentUser.name ?? ""
+        locationLabel.text          = currentUser.location ?? "No Location"
+        bioLabel.text               = currentUser.bio ?? "No Bio available"
+        bioLabel.numberOfLines      = 3
+        bioLabel.font               = UIFont.preferredFont(forTextStyle: .body)
+        locationImageView.image     = Images.mapingAndEndEllipse
         locationImageView.tintColor = .secondaryLabel
-        
-        
+    }
+    
+    
+    func downloadUserImage(){
+        NetworkManager.shared.downloadImage(for: currentUser.avatarUrl) { [weak self ](image) in
+            guard let self = self else {return}
+            DispatchQueue.main.async {
+                self.avatarImageView.image = image
+            }
+        }
     }
     
     
     func addConstraints(){
         let padding : CGFloat = 20
         let spacing : CGFloat = 12
+        bioLabel.font         = UIFont.systemFont(ofSize: 18, weight: .medium)
         locationImageView.translatesAutoresizingMaskIntoConstraints = false
-        bioLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        
         
         NSLayoutConstraint.activate([
             avatarImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: padding),
@@ -112,13 +103,7 @@ class GSUserHeaderVC: UIViewController {
             bioLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: spacing),
             bioLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
             bioLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-            bioLabel.heightAnchor.constraint(equalToConstant: 60)
-
+            bioLabel.heightAnchor.constraint(equalToConstant: 90)
         ])
-        
     }
-    
-
-
-
 }
