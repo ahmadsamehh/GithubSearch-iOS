@@ -15,6 +15,8 @@ Run the project on your emulator or physical device.
 ``` bash
 Programmatic UI and Constraints
 MVC
+Safari ViewController
+Diffable Datasource
 Delegation and Protocols
 Singleton
 Codable
@@ -22,7 +24,6 @@ TableView with custom cells
 CollectionView with custom items
 Networking and Fetching data from Github API with the default networking functionality.
 ```
-
 
 ## Built with
 [XCode](https://developer.apple.com/xcode/)
